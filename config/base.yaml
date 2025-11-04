@@ -1,0 +1,15 @@
+start: "2015-01-01"
+end: null
+tickers:
+  - SPY
+  - EFA
+  - IEF
+  - LQD
+  - GLD
+  - VNQ
+  - QQQ
+  - XLE
+  - XLF
+risk_free_rate_annual: 0.0
+no_shorting: true
+max_alloc_per_asset: 0.40
