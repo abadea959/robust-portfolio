@@ -15,10 +15,9 @@ def max_sharpe(
     tickers = list(mu.index)
     n = len(tickers)
 
-    # Align shapes
     cov = cov.loc[tickers, tickers]
     Sigma = cov.values
-    excess = (mu - rf).values  # (mu - rf*1)
+    excess = (mu - rf).values
 
     # Decision variable
     w = cp.Variable(n)
@@ -36,16 +35,13 @@ def max_sharpe(
     # Objective: maximize excess return
     objective = cp.Maximize(w @ excess)
 
-    # Solve
     prob = cp.Problem(objective, constraints)
-    # Let cvxpy pick a default; SCS/ECOS usually work. You can pass solver=cp.ECOS if needed.
     prob.solve()
 
     if w.value is None:
         raise RuntimeError("Optimization failed; try relaxing constraints or a different solver.")
 
     weights = pd.Series(np.array(w.value).ravel(), index=tickers)
-    # Numerical cleanup
-    weights = weights.clip(lower=-0.0)  # avoid tiny negative rounding
-    weights /= weights.sum()            # normalize exactly to 1
+    weights = weights.clip(lower=-0.0)
+    weights /= weights.sum()
     return weights
