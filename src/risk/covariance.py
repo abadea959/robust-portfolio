@@ -20,7 +20,6 @@ def sample_mean_cov(returns: pd.DataFrame, annualize: bool = True):
 
 
 def summarize_stats(mean: pd.Series, cov: pd.DataFrame):
-    """Convenience: print key risk/return metrics."""
     print("Expected annual returns:")
     print(mean.sort_values(ascending=False).round(3))
     print("\nCovariance matrix (annualized):")
