@@ -31,6 +31,11 @@ def cache_prices_csv(df, path="data/prices.csv"):
     os.makedirs(os.path.dirname(path), exist_ok=True)
     df.to_csv(path, index=True)
 
+def load_cached_prices(path: str) -> pd.DataFrame:
+    prices = pd.read_csv(path, index_col=0, parse_dates=True)
+    prices.sort_index(inplace=True)
+    return prices
+
 
 if __name__ == "__main__":
     from src.config import load_config
